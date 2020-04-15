@@ -1,18 +1,22 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Input from "../components/Input";
 import Button from "../components/Button";
 
-const SignUpScreen = () => {
+const SignUpScreen = (props) => {
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
+        <Text style={styles.header}>Sign Up</Text>
         <Input placeholder="First Name" />
         <Input placeholder="Last Name" />
         <Input placeholder="Email" />
-        <Input placeholder="Password" />
-        <Input placeholder="Confirm Password" />
-        <Button title="Sign Up" style={styles.btn}/>
+        <Input placeholder="Password" secureTextEntry={true} />
+        <Input placeholder="Confirm Password" secureTextEntry={true} />
+        <Button title="Sign Up" style={styles.btn} />
+        <TouchableOpacity onPress={() => props.onBackBtn(true)}>
+          <Text style={styles.text}>Back</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -24,13 +28,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  header: {
+    fontSize: 35,
+    color: "white",
+    marginBottom: 20,
+    alignSelf: "flex-start",
+  },
   container: {
-      width: '80%',
-      alignItems: 'center'
+    width: "80%",
+    alignItems: "center",
   },
   btn: {
-      marginTop: 40
-  }
+    marginTop: 40,
+    marginBottom: 20,
+  },
+  text: {
+    color: "white",
+  },
 });
 
 export default SignUpScreen;

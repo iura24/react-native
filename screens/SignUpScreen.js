@@ -14,7 +14,7 @@ const SignUpScreen = (props) => {
         <Input placeholder="Password" secureTextEntry={true} />
         <Input placeholder="Confirm Password" secureTextEntry={true} />
         <MainButton title="Sign Up" style={styles.btn} />
-        <TouchableOpacity onPress={() => props.onBackBtn(false)}>
+        <TouchableOpacity onPress={() => props.navigation.goBack()}>
           <Text style={styles.text}>Back</Text>
         </TouchableOpacity>
       </View>
@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#003f5c",
   },
   header: {
     fontSize: 35,

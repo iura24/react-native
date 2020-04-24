@@ -9,8 +9,6 @@ const LoginScreen = (props) => {
   const credentials = { username: "admin", password: "123" };
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [userIsValidate, setUserIsValidate] = useState(false);
-  const [passIdValidate, setpassIdValidate] = useState(false);
   const [userErrMsg, setUserErrMsg] = useState();
   const [passErrMsg, setPassErrMsg] = useState();
 
@@ -22,33 +20,29 @@ const LoginScreen = (props) => {
     setPassword(inputText);
   };
 
-  const errMessageHandler = () => {
+  const validateLogin = () => {
     setUserErrMsg(() => {
       if (username !== credentials.username) {
         return <InputError title="Invalid username" />;
-      } else {
-        setUserIsValidate(true);
       }
     });
     setPassErrMsg(() => {
       if (password !== credentials.password) {
         return <InputError title="Invalid password" />;
-      } else {
-        setpassIdValidate(true);
       }
     });
-  };
-
-  useEffect(() => {
-    if (userIsValidate && passIdValidate) {
-      props.onLogin(true);
+    if (
+      credentials.username === username &&
+      credentials.password === password
+    ) {
+      props.navigation.navigate("Home");
     }
-  }, [userIsValidate, passIdValidate]);
+  };
 
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
-        <Text style={styles.header}>Login</Text>
+        <Text style={styles.headerTitle}>Login</Text>
         <Input placeholder="Username" onChangeText={usernameHandler} />
         {userErrMsg}
         <Input
@@ -59,11 +53,15 @@ const LoginScreen = (props) => {
         {passErrMsg}
         <MainButton
           title="Login"
-          style={styles.btn}
-          onPress={errMessageHandler}
+          style={styles.loginBtn}
+          onPress={validateLogin}
         />
-        <TouchableOpacity onPress={() => props.onSignUpClick(true)}>
-          <Text style={styles.text}>Signup</Text>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate("SignUp");
+          }}
+        >
+          <Text style={styles.signUpBtn}>Signup</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -73,6 +71,7 @@ const LoginScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    backgroundColor: "#003f5c",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -81,18 +80,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   signUpBtn: {
-    backgroundColor: "#ccc",
-    marginTop: 5,
-    color: "black",
-  },
-  btn: {
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  text: {
     color: "white",
   },
-  header: {
+  loginBtn: {
+    marginVertical: 18,
+  },
+  headerTitle: {
     fontSize: 30,
     color: "white",
     marginBottom: 20,

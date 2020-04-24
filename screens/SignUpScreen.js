@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import Input from "../components/Input";
-import Button from "../components/Button";
+import MainButton from "../components/MainButton";
 
 const SignUpScreen = (props) => {
   return (
@@ -13,8 +13,8 @@ const SignUpScreen = (props) => {
         <Input placeholder="Email" />
         <Input placeholder="Password" secureTextEntry={true} />
         <Input placeholder="Confirm Password" secureTextEntry={true} />
-        <Button title="Sign Up" style={styles.btn} />
-        <TouchableOpacity onPress={() => props.onBackBtn(true)}>
+        <MainButton title="Sign Up" style={styles.btn} />
+        <TouchableOpacity onPress={() => props.onBackBtn(false)}>
           <Text style={styles.text}>Back</Text>
         </TouchableOpacity>
       </View>

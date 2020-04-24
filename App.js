@@ -1,21 +1,30 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
 import LoggedScreen from "./screens/LoggedScreen";
 
 export default function App() {
-  const [isLogin, setIsLogIn] = useState(true);
+  const [credentialsValidated, setCredentialValidated] = useState(false);
+  const [isSingUpScreen, setIsSignUpScreen] = useState(false);
 
-  const selectScreenHandler = (isLogin) => {
-    setIsLogIn(isLogin);
+  const validateCredentials = (isValidated) => {
+    setCredentialValidated(isValidated);
   };
 
-  let content = <LoginScreen onSignUpBtn={selectScreenHandler} />;
-  // let content = <LoggedScreen onBackBtn={selectScreenHandler}/>;
-  if (isLogin === false) {
-    content = <SignUpScreen onBackBtn={selectScreenHandler} />;
+  const signUpHandler = (isClicked) => {
+    setIsSignUpScreen(isClicked);
+  };
+
+  let content = <LoginScreen onLogin={validateCredentials} onSignUpClick={signUpHandler} />;
+
+  if (credentialsValidated) {
+    content = <LoggedScreen onBackBtn={setCredentialValidated}/>;
+  }
+
+  if (isSingUpScreen) {
+    content = <SignUpScreen onBackBtn={setIsSignUpScreen}/>;
   }
 
   return <View style={styles.screen}>{content}</View>;

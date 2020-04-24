@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 
 import Input from "../components/Input";
-import Button from "../components/Button";
+import MainButton from "../components/MainButton";
 import InputError from "../components/InputError";
 
 const LoginScreen = (props) => {
+  const credentials = { username: "admin", password: "123" };
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const [userIsValidate, setUserIsValidate] = useState(false);
+  const [passIdValidate, setpassIdValidate] = useState(false);
   const [userErrMsg, setUserErrMsg] = useState();
   const [passErrMsg, setPassErrMsg] = useState();
-
-  const name = "admin";
-  const pass = "pass";
 
   const usernameHandler = (inputText) => {
     setUsername(inputText);
@@ -23,21 +23,27 @@ const LoginScreen = (props) => {
   };
 
   const errMessageHandler = () => {
-      let x;
     setUserErrMsg(() => {
-      if (name !== username) {
+      if (username !== credentials.username) {
         return <InputError title="Invalid username" />;
+      } else {
+        setUserIsValidate(true);
       }
     });
     setPassErrMsg(() => {
-      if (password !== pass) {
+      if (password !== credentials.password) {
         return <InputError title="Invalid password" />;
+      } else {
+        setpassIdValidate(true);
       }
     });
-    return x = 2;
   };
-  console.log(errMessageHandler);
-  const onLoginHandler = () => {};
+
+  useEffect(() => {
+    if (userIsValidate && passIdValidate) {
+      props.onLogin(true);
+    }
+  }, [userIsValidate, passIdValidate]);
 
   return (
     <View style={styles.screen}>
@@ -51,8 +57,12 @@ const LoginScreen = (props) => {
           onChangeText={passwordHandler}
         />
         {passErrMsg}
-        <Button title="Login" style={styles.btn} onPress={errMessageHandler} />
-        <TouchableOpacity onPress={() => props.onSignUpBtn(false)}>
+        <MainButton
+          title="Login"
+          style={styles.btn}
+          onPress={errMessageHandler}
+        />
+        <TouchableOpacity onPress={() => props.onSignUpClick(true)}>
           <Text style={styles.text}>Signup</Text>
         </TouchableOpacity>
       </View>

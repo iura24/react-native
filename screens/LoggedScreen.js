@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 
 const LoggedScreen = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Logged Succesfully</Text>
-      <TouchableOpacity onPress={() => props.onBackBtn(true)}>
+      <TouchableOpacity onPress={() => props.onBackBtn(false)}>
           <Text style={styles.text}>Back</Text>
         </TouchableOpacity>
     </View>
